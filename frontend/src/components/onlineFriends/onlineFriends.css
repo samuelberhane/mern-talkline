@@ -1,0 +1,37 @@
+.onlineFriend {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 1.1rem;
+  margin: 0.8rem 0;
+}
+
+.rightbarFriends h1 {
+  color: rgb(43, 183, 226);
+}
+
+.friendImage img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.onlineFriend p {
+  color: rgb(3, 82, 105);
+}
+
+.onlineDot {
+  height: 11px;
+  width: 11px;
+  background-color: rgb(47, 226, 47);
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 50%;
+}
+
+.friendImage {
+  width: 35px;
+  height: 35px;
+  position: relative;
+}

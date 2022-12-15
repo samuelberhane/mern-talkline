@@ -1,0 +1,41 @@
+.tagsModal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
+.tagsModalContainer {
+  background-color: #fff;
+  width: 250px;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+}
+
+.tagsModalContainer h2 {
+  margin-bottom: 0.5rem;
+}
+
+.addTag {
+  margin-top: 0.5rem;
+  width: 100%;
+  border: none;
+  padding: 0.4rem;
+  font-size: 1rem;
+  background-color: #23a34a;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.tagsModalContainer input {
+  width: 20px;
+  background-color: transparent;
+  border: none;
+  box-shadow: 0 0 0;
+}

@@ -1,0 +1,9 @@
+.feeds {
+  margin-left: 17%;
+  width: 50%;
+  border-right: 1px solid rgba(128, 128, 128, 0.308);
+}
+
+.feedsContainer {
+  padding: 1rem 2rem;
+}

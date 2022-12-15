@@ -1,0 +1,14 @@
+
+# backend files
+/backend/node_modules
+/backend/.env
+
+# frontend files
+/frontend/node_modules
+/frontend/.pnp
+/frontend/coverage
+/frontend/build
+
+# socket file
+/socket/.env
+/socket/node_modules

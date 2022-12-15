@@ -1,0 +1,89 @@
+.postsContainer {
+  margin: 1rem 0;
+}
+
+.post {
+  margin: 1rem 0;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+  padding: 0.3rem;
+}
+
+.postTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+
+.postUser {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.postUserImage {
+  width: 35px;
+  height: 35px;
+}
+
+.postUserImage img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.postEdit {
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+}
+
+.postLike {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 1.1rem;
+}
+
+.likeIcon {
+  background-color: rgb(44, 44, 161);
+  border: none;
+  color: aliceblue;
+  border-radius: 50%;
+  padding: 0.2rem;
+}
+
+.postTime {
+  font-size: 14px;
+  color: gray;
+}
+
+.boldSpan {
+  font-weight: bold;
+}
+
+.postImage {
+  width: 100%;
+  height: 380px;
+  margin: 0.3rem 0;
+}
+
+.postImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.postBottom {
+  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.postDelete {
+  background: transparent;
+  border: none;
+  font-size: 0.8rem;
+  color: rgb(245, 87, 87);
+}

@@ -1,0 +1,85 @@
+.leftbar {
+  width: 16%;
+  height: calc(100vh - 58px);
+  overflow-y: scroll;
+  position: fixed;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  padding: 0 0.2rem;
+}
+
+::-webkit-scrollbar-button {
+  background-color: aliceblue;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(81, 83, 80, 0.3);
+}
+
+.leftbarContainer {
+  padding: 1.2rem 2.3rem;
+}
+
+.leftbarLists {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  font-size: 1.2rem;
+}
+
+.profileLink p {
+  background-color: rgb(201, 18, 125);
+  padding: 0.1rem 0.3rem;
+  border-radius: 5px;
+  display: inline;
+  margin-left: 0.3rem;
+  color: #fff;
+}
+
+.profileLink p:hover {
+  background-color: rgb(3, 99, 99);
+}
+
+.leftbarLists li {
+  display: flex;
+  gap: 10px;
+}
+
+.profileLink i,
+.leftbarLists li i {
+  width: 25px;
+  color: rgb(129, 23, 228);
+}
+
+.leftbarFriends {
+  margin-top: 1.2rem;
+  margin-bottom: 1rem;
+}
+.leftbarFriends h1 {
+  margin-bottom: 0.5rem;
+  color: rgb(43, 183, 226);
+}
+
+.friendImage {
+  width: 35px;
+  height: 35px;
+}
+
+.friendImage img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.friendsDetail {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.friendName {
+  color: rgb(3, 82, 105);
+}

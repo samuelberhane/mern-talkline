@@ -1,0 +1,20 @@
+.rightbar {
+  width: 18%;
+}
+
+.rightbarContainer {
+  padding: 1rem 2rem;
+}
+
+.adVideo {
+  width: 100%;
+}
+
+.video {
+  height: 250px;
+  border-radius: 15px;
+}
+
+.rightbarFriends {
+  margin-top: 1.3rem;
+}

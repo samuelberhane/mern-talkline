@@ -1,0 +1,94 @@
+.messageHistory {
+  height: 65vh;
+  overflow-y: scroll;
+  padding-right: 1rem;
+}
+
+.messages {
+  height: 100%;
+}
+
+.messageTime {
+  display: flex;
+  justify-content: flex-start;
+  font-size: 14px;
+  color: grey;
+  padding: 0 3rem;
+}
+
+.messageContent {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.messageImage img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.messageContents {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.6rem;
+}
+
+.messageContent.userText {
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  gap: 0.3rem;
+}
+
+.messageText.userText {
+  text-align: end;
+  background-color: rgb(57, 111, 228);
+  color: #fff;
+}
+
+.messageText {
+  max-width: 280px;
+  background-color: rgb(230, 238, 238);
+  color: #000;
+  padding: 0 1.2rem;
+  border-radius: 0.8rem;
+  display: flex;
+  align-items: center;
+}
+
+.messageTime.userText {
+  justify-content: flex-end;
+}
+
+.messageSend {
+  height: 120px;
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  z-index: 5;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.writeText {
+  height: 100%;
+  flex: 4;
+  border: none;
+  outline: none;
+  border-right: 1px dotted darkgreen;
+  padding: 0.5rem 1rem;
+}
+
+.sendMessage {
+  flex: 1;
+  padding: 0.6rem;
+  margin-right: 1rem;
+  font-size: 1rem;
+  border: none;
+  background-color: rgb(44, 214, 38);
+  color: #fff;
+  border-radius: 12px;
+}
+
+.startChat {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+}
