@@ -10,11 +10,13 @@ const createMessage = async (req, res) => {
   }
 };
 
-// get messages by conversation id
+// get messages
 const getMessages = async (req, res) => {
-  const { id } = req.params;
+  const { from, to } = req.body;
   try {
-    let userMessages = await Message.find({ conversationId: id });
+    let userMessages = await Message.find({
+      users: { $all: [from, to] },
+    });
     res.status(200).json(userMessages);
   } catch (error) {
     res.status(500).json({ error: error.message });

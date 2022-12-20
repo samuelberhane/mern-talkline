@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useGlobalUserContext } from "./context/UserContext";
 import { useGlobalPostContext } from "./context/PostContext";
 import TagsModal from "./components/tagsModal/TagsModal";
+import { socketRoute } from "./utils/apiRoute";
+import { io } from "socket.io-client";
 import {
   Login,
   Profile,
@@ -12,24 +14,20 @@ import {
   Chat,
 } from "./pages/index";
 
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:3001");
-
 const App = () => {
   const { user, dispatch: userDispatch } = useGlobalUserContext();
-  const { userPost, dispatch, showModal, allUsers } = useGlobalPostContext();
+  const { userPost, showModal, allUsers } = useGlobalPostContext();
+  const userId = user?.user?._id;
+  const socket = useRef();
 
   useEffect(() => {
+    socket.current = io(socketRoute);
     userDispatch({ type: "SOCKET", payload: socket });
-  }, [dispatch, user, userDispatch]);
-
-  // online users
-  useEffect(() => {
-    socket?.emit("onlineUser", user?.user._id);
-    socket?.on("getOnlineUsers", (usersArray) => {
+    socket.current?.emit("addUser", userId);
+    socket.current?.on("getOnlineUsers", (usersArray) => {
       userDispatch({ type: "ONLINE_USERS", payload: usersArray });
     });
-  }, [user, userDispatch, userPost, dispatch]);
+  }, [userId]);
 
   // update local storage when user changes
   useEffect(() => {

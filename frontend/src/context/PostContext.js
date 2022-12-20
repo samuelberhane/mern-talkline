@@ -18,7 +18,10 @@ const reducer = (state, action) => {
     case "CREATE_POST":
       return {
         ...state,
-        userPost: [payload, ...state.userPost],
+        userPost: {
+          ...state.userPost,
+          allPosts: [payload, ...state.userPost.allPosts],
+        },
         checkedTags: [],
       };
     case "ADD_TAGS":
@@ -26,33 +29,47 @@ const reducer = (state, action) => {
     case "OPEN_MODAL":
       return { ...state, showModal: true };
     case "UPDATE_FOLLOW":
-      let tempAllUsers = state.allUsers.map((user) => {
+      let tempAllUsers = state.allUsers.tempUsers.map((user) => {
         let tempUser = payload.find((person) => person._id === user._id);
         if (tempUser) return tempUser;
         return user;
       });
-      return { ...state, allUsers: tempAllUsers };
+      return {
+        ...state,
+        allUsers: { ...state.allUsers, tempUsers: tempAllUsers },
+      };
     case "UPDATE_LIKE":
-      let updateLikedPost = state.userPost.map((post) => {
+      let updateLikedPost = state.userPost.allPosts.map((post) => {
         if (post._id === payload._id) return payload;
         return post;
       });
-      return { ...state, userPost: updateLikedPost };
+      return {
+        ...state,
+        userPost: { ...state.userPost, allPosts: updateLikedPost },
+      };
+    case "UPDATE_USERS":
+      const updatedUsers = state.allUsers.tempUsers.map((user) => {
+        if (user._id === payload._id) return payload;
+        return user;
+      });
+      return {
+        ...state,
+        allUsers: { ...state.allUsers, tempUsers: updatedUsers },
+      };
     default:
       return state;
   }
 };
 
 const initialState = {
-  userPost: talklinePosts || [],
-  allUsers: talklineUsers || [],
+  userPost: talklinePosts || {},
+  allUsers: talklineUsers || {},
   showModal: false,
   checkedTags: [],
 };
 
 const PostContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
   return (
     <PostContext.Provider value={{ ...state, dispatch }}>
       {children}

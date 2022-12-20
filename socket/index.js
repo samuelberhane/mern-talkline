@@ -23,24 +23,20 @@ const checkIds = (userId, socketId) => {
     usersArray.push({ userId, socketId });
 };
 
-const removeUser = (socketId) => {
-  return usersArray.filter((user) => user.socketId !== socketId);
-};
-
 io.on("connection", (socket) => {
   console.log("User Connected!");
-  socket.on("onlineUser", (userId) => {
+  socket.on("addUser", (userId) => {
     checkIds(userId, socket.id);
     io.emit("getOnlineUsers", usersArray);
-    socket.on("sendMessage", ({ senderId, receiverId, text }) => {
-      let receiverUser = usersArray?.find((user) => user.userId === receiverId);
-      if (receiverUser)
-        io.to(receiverUser.socketId).emit("getMessage", { senderId, text });
-    });
   });
-
-  io.on("disconnect", () => {
-    removeUser(socket.id);
+  socket.on("sendMessage", (data) => {
+    let receiverUser = usersArray?.find((user) => user.userId === data.to);
+    if (receiverUser) {
+      io.emit("getMessage", data);
+    }
+  });
+  socket.on("userLogout", (userId) => {
+    usersArray = usersArray.filter((user) => user.userId !== userId);
     io.emit("getOnlineUsers", usersArray);
   });
 });

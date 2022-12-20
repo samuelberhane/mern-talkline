@@ -9,6 +9,6 @@ const {
 router.post("/", createMessage);
 
 // get messages by conversation id
-router.get("/:id", getMessages);
+router.post("/allMessages", getMessages);
 
 module.exports = router;

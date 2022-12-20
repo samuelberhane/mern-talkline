@@ -15,16 +15,16 @@ const register = async (req, res) => {
   if (!confirmPassword) emptyFields.push("confirmPassword");
 
   if (emptyFields.length > 0)
-    return res.status(400).json({ error: "Please Fill In All Fields!" });
+    return res.json({ error: "Please Fill In All Fields!", status: false });
 
   //   check if email exists
   const emailExists = await User.findOne({ email });
   if (emailExists)
-    return res.status(401).json({ error: "Email Already Exists!" });
+    return res.json({ error: "Email Already Exists!", status: false });
 
   // check if password and confirm password are the same
   if (password !== confirmPassword)
-    return res.status(403).json({ error: "Password Don't Match!" });
+    return res.json({ error: "Password Don't Match!", status: false });
 
   // hash user password
   const hash = await bcrypt.hash(password, 12);
@@ -37,9 +37,9 @@ const register = async (req, res) => {
       email,
       password: hash,
     });
-    res.status(200).json(user);
+    res.json({ user, status: true });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message, status: false });
   }
 };
 
@@ -53,20 +53,21 @@ const login = async (req, res) => {
   if (!password) emptyFields.push("password");
 
   if (emptyFields.length > 0)
-    return res.status(400).json({ error: "Please Fill In All Fields!" });
+    return res.json({ error: "Please Fill In All Fields!", status: false });
 
   // check user exists
   const userExists = await User.findOne({ email });
 
   // user not register
-  if (!userExists) return res.status(404).json({ error: "Email Not Exists." });
+  if (!userExists)
+    return res.json({ error: "Email Not Exists.", status: false });
 
   // check password
   const matchPassword = await bcrypt.compare(password, userExists.password);
 
   // password not match
   if (!matchPassword)
-    return res.status(404).json({ error: "Incorrect Password!" });
+    return res.json({ error: "Incorrect Password!", status: false });
 
   // create token
   const token = jwt.sign({ _id: userExists._id }, process.env.SECRET, {
@@ -75,7 +76,7 @@ const login = async (req, res) => {
 
   let { isAdmin, password: userPassword, ...other } = userExists._doc;
 
-  res.status(200).json({ user: other, token });
+  res.json({ user: other, token, status: true });
 };
 
 module.exports = { register, login };

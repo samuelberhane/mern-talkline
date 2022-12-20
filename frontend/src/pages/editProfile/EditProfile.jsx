@@ -6,9 +6,13 @@ import { useGlobalUserContext } from "../../context/UserContext";
 import { useState } from "react";
 import "./editProfile.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { uploadRoute, userRoute } from "../../utils/apiRoute";
+import { useGlobalPostContext } from "../../context/PostContext";
 
 const EditProfile = () => {
   const { user, dispatch } = useGlobalUserContext();
+  const { dispatch: postDispatch } = useGlobalPostContext();
   const navigate = useNavigate();
 
   const [userData, setUserData] = useState({
@@ -32,10 +36,7 @@ const EditProfile = () => {
       profilePictureName = Date.now() + userData.profilePicture.name;
       data.append("name", profilePictureName);
       data.append("file", userData.profilePicture);
-      await fetch("/api/upload", {
-        method: "POST",
-        body: data,
-      });
+      await axios.post(uploadRoute, data);
     }
 
     // upload cover picture
@@ -45,35 +46,29 @@ const EditProfile = () => {
       coverPictureName = Date.now() + userData.coverPicture.name;
       data.append("name", coverPictureName);
       data.append("file", userData.coverPicture);
-      await fetch("/api/upload", {
-        method: "POST",
-        body: data,
-      });
+      await axios.post(uploadRoute, data);
     }
 
     // update user profile
-    let response = await fetch(`/api/users/${user.user._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        firstname: userData.firstname,
-        lastname: userData.lastname,
-        currentCity: userData.currentCity,
-        homeTown: userData.homeTown,
-        relationship: userData.relationship,
-        desc: userData.desc,
-        profilePicture: userData.profilePicture
-          ? profilePictureName
-          : user.user.profilePicture,
-        coverPicture: userData.coverPicture
-          ? coverPictureName
-          : user.user.coverPicture,
-      }),
+    let { data } = await axios.put(`${userRoute}/${user.user._id}`, {
+      firstname: userData.firstname,
+      lastname: userData.lastname,
+      currentCity: userData.currentCity,
+      homeTown: userData.homeTown,
+      relationship: userData.relationship,
+      desc: userData.desc,
+      profilePicture: userData.profilePicture
+        ? profilePictureName
+        : user.user.profilePicture,
+      coverPicture: userData.coverPicture
+        ? coverPictureName
+        : user.user.coverPicture,
     });
 
-    let json = await response.json();
-    if (response.ok) {
-      dispatch({ type: "UPDATE_USER", payload: json });
+    if (data) {
+      console.log("updated user data", data);
+      dispatch({ type: "UPDATE_USER", payload: data });
+      postDispatch({ type: "UPDATE_USERS", payload: data });
       navigate("/");
     }
   };

@@ -35,7 +35,7 @@ const getPosts = async (req, res) => {
     const allPosts = await Post.find().sort({
       createdAt: -1,
     });
-    res.status(200).json(allPosts);
+    res.json({ allPosts, status: true });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -2,62 +2,69 @@ import React from "react";
 import { useGlobalPostContext } from "../../context/PostContext";
 import { useGlobalUserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
+import { imageRoute } from "../../utils/apiRoute";
 import "./onlineFriends.css";
 
 const OnlineFriends = () => {
   const { allUsers } = useGlobalPostContext();
   const { user, onlineUsers } = useGlobalUserContext();
-  const { _id } = user.user;
+  const { following, followers, _id } = user?.user;
+
   function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
   }
 
-  if (allUsers.length > 0) {
-    const { following, followers } = user?.user;
-    const userFriends = [...followers, ...following];
+  // all user friend
+  const userFriends = [...followers, ...following];
 
-    let uniqueFriendsArray = userFriends.filter(onlyUnique);
-    let onlineUsersId = onlineUsers?.filter((person) => person.userId !== _id);
+  // remove repeated id
+  let uniqueFriendsArray = userFriends.filter(onlyUnique);
 
-    onlineUsersId = onlineUsersId?.filter((user) => {
-      const friendIndex = uniqueFriendsArray.indexOf(user.userId);
-      return friendIndex >= 0;
-    });
+  // filter user id from online users id
+  let onlineUsersId = onlineUsers?.filter((person) => person.userId !== _id);
 
-    const onlineFriends = onlineUsersId?.map((friendid) => {
-      let friend = allUsers?.find((user) => user._id === friendid.userId);
-      return friend;
-    });
+  // check online user is user's friend
+  onlineUsersId = onlineUsersId?.filter((user) => {
+    const friendIndex = uniqueFriendsArray.indexOf(user.userId);
+    return friendIndex >= 0;
+  });
 
+  // get online users information
+  const onlineFriends = onlineUsersId?.map((friendid) => {
+    let friend = allUsers?.tempUsers?.find(
+      (user) => user._id === friendid.userId
+    );
+    return friend;
+  });
+  if (allUsers?.tempUsers?.length > 0 && onlineFriends?.length > 0) {
     return (
       <>
         <h1>Online Friends</h1>
-        {!onlineFriends ? (
-          <p></p>
-        ) : (
-          <div className="onlineFriends">
-            {onlineFriends?.map((friend, index) => {
-              const { firstname, lastname, profilePicture, _id } = friend;
-              return (
-                <Link to={`/profile/${_id}`} key={index}>
-                  <div className="onlineFriend">
-                    <div className="friendImage">
-                      <img src={`/images/${profilePicture}`} alt={firstname} />
-                      <div className="onlineDot"></div>
-                    </div>
-                    <p>
-                      {firstname} {lastname}
-                    </p>
+        <div className="onlineFriends">
+          {onlineFriends?.map((friend, index) => {
+            const { firstname, lastname, profilePicture, _id } = friend;
+            return (
+              <Link to={`/profile/${_id}`} key={index}>
+                <div className="onlineFriend">
+                  <div className="friendImage">
+                    <img
+                      src={`${imageRoute}/${profilePicture}`}
+                      alt={firstname}
+                    />
+                    <div className="onlineDot"></div>
                   </div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
+                  <p>
+                    {firstname} {lastname}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </>
     );
   } else {
-    return "";
+    return <h1>Online Friends</h1>;
   }
 };
 

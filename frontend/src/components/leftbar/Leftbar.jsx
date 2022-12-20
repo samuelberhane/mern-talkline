@@ -3,6 +3,7 @@ import "./leftbar.css";
 import { Link } from "react-router-dom";
 import { useGlobalUserContext } from "../../context/UserContext";
 import { useGlobalPostContext } from "../../context/PostContext";
+import { imageRoute } from "../../utils/apiRoute";
 
 const Leftbar = () => {
   const { user } = useGlobalUserContext();
@@ -46,13 +47,16 @@ const Leftbar = () => {
         </ul>
         <div className="leftbarFriends">
           <h1>All Users</h1>
-          {allUsers.map((friend, index) => {
+          {allUsers?.tempUsers?.map((friend, index) => {
             const { profilePicture, firstname, lastname, _id } = friend;
             return (
               <div key={index}>
                 <Link to={`/profile/${_id}`} className="friendsDetail">
                   <div className="friendImage">
-                    <img src={`/images/${profilePicture}`} alt="profile" />
+                    <img
+                      src={`${imageRoute}/${profilePicture}`}
+                      alt="profile"
+                    />
                   </div>
                   <p className="friendName">
                     {firstname} {lastname}

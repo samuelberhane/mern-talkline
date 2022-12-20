@@ -3,6 +3,8 @@ import "./share.css";
 import { useGlobalUserContext } from "../../context/UserContext";
 import { useGlobalPostContext } from "../../context/PostContext";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { uploadRoute, postRoute, imageRoute } from "../../utils/apiRoute";
 
 const Share = () => {
   const { user } = useGlobalUserContext();
@@ -17,25 +19,17 @@ const Share = () => {
       postImageName = new Date().getTime() + postData.postImage.name;
       data.append("name", postImageName);
       data.append("file", postData.postImage);
-      await fetch("/api/upload", {
-        method: "POST",
-        body: data,
-      });
+      await axios.post(uploadRoute, data);
     }
-    let response = await fetch("/api/posts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: user.user._id,
-        image: postData.postImage ? postImageName : "",
-        desc: postData.postDesc,
-        tags: checkedTags,
-      }),
+    let { data: postsData } = await axios.post(postRoute, {
+      userId: user.user._id,
+      image: postData.postImage ? postImageName : "",
+      desc: postData.postDesc,
+      tags: checkedTags,
     });
 
-    let json = await response.json();
-    if (response.ok) {
-      dispatch({ type: "CREATE_POST", payload: json });
+    if (postData) {
+      dispatch({ type: "CREATE_POST", payload: postsData });
       setPostData({ postDesc: "", postImage: "" });
     }
   };
@@ -45,7 +39,7 @@ const Share = () => {
         <div className="shareTop">
           <div className="shareImage">
             <Link to={`/profile/${_id}`}>
-              <img src={`/images/${profilePicture}`} alt="user" />
+              <img src={`${imageRoute}/${profilePicture}`} alt="user" />
             </Link>
           </div>
           <textarea
@@ -70,7 +64,7 @@ const Share = () => {
                   }
                 />
                 <label htmlFor="file" className="fileUpload">
-                  <i className="fa-solid fa-photo-film"></i>  Image
+                  <i className="fa-solid fa-photo-film"></i> Image
                 </label>
               </li>
               <li>

@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import { useGlobalPostContext } from "../../context/PostContext";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useGlobalUserContext } from "../../context/UserContext";
+import axios from "axios";
+import { postRoute, imageRoute } from "../../utils/apiRoute";
 
 const CreatedPost = ({ post }) => {
   const { allUsers, dispatch } = useGlobalPostContext();
   const { user } = useGlobalUserContext();
   const { image, desc, createdAt, tags, userId, likes, _id } = post;
-  let postOwner = allUsers.find((user) => user._id === userId);
-
+  let postOwner = allUsers?.tempUsers?.find((user) => user._id === userId);
   if (postOwner) {
     const { firstname, lastname, profilePicture } = postOwner;
 
@@ -26,15 +27,11 @@ const CreatedPost = ({ post }) => {
     let userTags = handleUserTags();
 
     const handleLike = async () => {
-      let response = await fetch(`/api/posts/like/${_id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ likingUser: user.user }),
+      let { data } = await axios.put(`${postRoute}/like/${_id}`, {
+        likingUser: user.user,
       });
-
-      let json = await response.json();
-      if (response.ok) {
-        dispatch({ type: "UPDATE_LIKE", payload: json });
+      if (data) {
+        dispatch({ type: "UPDATE_LIKE", payload: data });
       }
     };
 
@@ -44,7 +41,7 @@ const CreatedPost = ({ post }) => {
           <div className="postUser">
             <div className="postUserImage">
               <Link to={`/profile/${userId}`}>
-                <img src={`/images/${profilePicture}`} alt="user" />
+                <img src={`${imageRoute}/${profilePicture}`} alt="user" />
               </Link>
             </div>
             <div className="postUserTags">
@@ -59,7 +56,7 @@ const CreatedPost = ({ post }) => {
           <p className="desc">{desc}</p>
           {image && (
             <div className="postImage">
-              <img src={`/images/${image}`} alt="post" />
+              <img src={`${imageRoute}/${image}`} alt="post" />
             </div>
           )}
           <p className="postTime">

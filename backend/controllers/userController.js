@@ -9,7 +9,7 @@ const getUsers = async (req, res) => {
       const { password, updatedAt, ...other } = user._doc;
       return other;
     });
-    res.status(200).json(tempUsers);
+    res.json({ tempUsers, status: true });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -35,15 +35,18 @@ const updateUser = async (req, res) => {
     // hash and update password
     if (password) {
       const hashPassword = await bcrypt.hash(password, 12);
-      const user = await User.findByIdAndUpdate(
+      const updatedUser = await User.findByIdAndUpdate(
         id,
         { ...req.body, password: hashPassword },
         { new: true }
       );
-      const { password, updatedAt, ...other } = user._doc;
-      return res.status(200).json(other);
+      const { password, updatedAt, ...user } = updatedUser._doc;
+      return res.status(200).json(user);
     }
-    const user = await User.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    const { password: userPassword, updatedAt, ...user } = updatedUser._doc;
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ error: error.message });

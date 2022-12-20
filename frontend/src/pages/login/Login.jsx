@@ -4,6 +4,8 @@ import "../auth.css";
 import { useGlobalUserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useGlobalPostContext } from "../../context/PostContext";
+import axios from "axios";
+import { authRoute, postRoute, userRoute } from "../../utils/apiRoute";
 
 const Login = () => {
   const { accountCreated, dispatch } = useGlobalUserContext();
@@ -16,37 +18,27 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = userData;
-    let response = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
-
-    let json = await response.json();
-    if (response.ok) {
+    let { data } = await axios.post(`${authRoute}/login`, { email, password });
+    if (data.status === true) {
       setError(null);
-      dispatch({ type: "LOGIN", payload: json });
-      localStorage.setItem("talklineUser", JSON.stringify(json));
+      dispatch({ type: "LOGIN", payload: data });
+      localStorage.setItem("talklineUser", JSON.stringify(data));
       navigate("/");
     }
-    if (!response.ok) {
-      setError(json.error);
+    if (data.status === false) {
+      setError(data.error);
     }
 
-    let postResponse = await fetch("/api/posts", { method: "GET" });
-    let postJson = await postResponse.json();
-    if (postResponse.ok) {
-      postDispatch({ type: "GET_POSTS", payload: postJson });
-      localStorage.setItem("talklinePosts", JSON.stringify(postJson));
+    let { data: postResponse } = await axios.get(postRoute);
+    if (postResponse.status === true) {
+      postDispatch({ type: "GET_POSTS", payload: postResponse });
+      localStorage.setItem("talklinePosts", JSON.stringify(postResponse));
     }
-    let userResponse = await fetch("/api/users", { method: "GET" });
-    let userJson = await userResponse.json();
-    if (userResponse.ok) {
-      postDispatch({ type: "GET_USERS", payload: userJson });
-      localStorage.setItem("talklineUsers", JSON.stringify(userJson));
+
+    let { data: userResponse } = await axios.get(userRoute);
+    if (userResponse.status === true) {
+      postDispatch({ type: "GET_USERS", payload: userResponse });
+      localStorage.setItem("talklineUsers", JSON.stringify(userResponse));
     }
   };
 

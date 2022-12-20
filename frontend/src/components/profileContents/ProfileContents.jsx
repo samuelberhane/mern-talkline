@@ -5,6 +5,7 @@ import UserInformation from "../userInformation/UserInformation";
 import { useGlobalUserContext } from "../../context/UserContext";
 import { Link, useParams } from "react-router-dom";
 import { useGlobalPostContext } from "../../context/PostContext";
+import { imageRoute } from "../../utils/apiRoute";
 
 const ProfileContents = () => {
   const { user } = useGlobalUserContext();
@@ -12,14 +13,14 @@ const ProfileContents = () => {
   const { allUsers } = useGlobalPostContext();
 
   if (allUsers) {
-    const profilePerson = allUsers.find((user) => user._id === id);
+    const profilePerson = allUsers?.tempUsers?.find((user) => user._id === id);
     const { coverPicture, profilePicture, desc, firstname, lastname } =
       profilePerson;
     return (
       <div className="profileContents">
         <div className="profileContentContainer">
           <div className="coverImage">
-            <img src={`/images/${coverPicture}`} alt="cover" />
+            <img src={`${imageRoute}/${coverPicture}`} alt="cover" />
           </div>
 
           <div className="profileDescription">
@@ -33,7 +34,7 @@ const ProfileContents = () => {
             )}
             <div className="profileDesc">
               <div className="profileImage">
-                <img src={`/images/${profilePicture}`} alt="user" />
+                <img src={`${imageRoute}/${profilePicture}`} alt="user" />
               </div>
               <p className="username">
                 {firstname} {lastname}

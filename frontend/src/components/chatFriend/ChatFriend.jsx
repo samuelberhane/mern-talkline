@@ -1,15 +1,13 @@
 import React from "react";
 import "./chatFriend.css";
+import { imageRoute } from "../../utils/apiRoute";
 
-const ChatFriend = ({ ids, userId, allUsers }) => {
-  const chatFriendId = ids.members.find((personid) => personid !== userId);
-  const chatFriend = allUsers.find((person) => person._id === chatFriendId);
-
-  const { profilePicture, firstname, lastname } = chatFriend;
+const ChatFriend = ({ friend }) => {
+  const { profilePicture, firstname, lastname } = friend;
   return (
     <div className="friendInformation">
       <div className="friendImage">
-        <img src={`/images/${profilePicture}`} alt={firstname} />
+        <img src={`${imageRoute}/${profilePicture}`} alt={firstname} />
       </div>
       <p>
         {firstname} {lastname}

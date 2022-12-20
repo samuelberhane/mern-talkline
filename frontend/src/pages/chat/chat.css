@@ -5,7 +5,7 @@
 }
 
 .chatContainer {
-  height: calc(100vh - 80px);
+  height: calc(100vh - 110px);
 }
 
 .chatLeft,
@@ -17,11 +17,11 @@
 }
 
 .chatLeft {
-  flex: 3;
+  flex: 2.5;
 }
 
 .chatMiddle {
-  flex: 6;
+  flex: 6.5;
 }
 
 .chatRight {

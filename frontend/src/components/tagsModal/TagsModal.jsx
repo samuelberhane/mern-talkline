@@ -19,7 +19,7 @@ const TagsModal = () => {
     <div className="tagsModal">
       <div className="tagsModalContainer">
         <h2>Tag Friends</h2>
-        {allUsers
+        {allUsers.tempUsers
           .filter((friend) => friend._id !== user.user._id)
           .map((friend, index) => {
             const { firstname, lastname } = friend;

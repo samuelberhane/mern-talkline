@@ -2,21 +2,15 @@ import React, { useEffect, useRef } from "react";
 import "./messages.css";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useState } from "react";
+import axios from "axios";
+import { imageRoute, messageRoute } from "../../utils/apiRoute";
 
-const Messages = ({
-  allUsers,
-  currentChat,
-  currentMessages,
-  user,
-  setCurrentMessages,
-  socket,
-}) => {
+const Messages = ({ allUsers, currentChat, user, socket }) => {
   const [messageText, setMessageText] = useState("");
   const [receivedMessage, setReceivedMessage] = useState(null);
-  const userId = user.user._id;
-  const { profilePicture } = user.user;
-  const chatFriendId = currentChat?.members.find((id) => id !== userId);
-  const chatFriend = allUsers.find((friend) => friend._id === chatFriendId);
+  const [currentChatInfo, setCurrentChatInfo] = useState(null);
+  const [currentMessages, setCurrentMessages] = useState(null);
+  const { _id: userId, profilePicture } = user.user;
   const scrollMessage = useRef();
 
   useEffect(() => {
@@ -24,65 +18,86 @@ const Messages = ({
   }, [currentMessages]);
 
   const sendMessage = async () => {
-    const receiverId = currentChat?.members.find((user) => user !== userId);
-    socket?.emit("sendMessage", {
-      senderId: userId,
-      receiverId,
+    const from = userId;
+    const to = currentChat;
+    socket?.current?.emit("sendMessage", {
+      to: currentChat,
+      sender: userId,
       text: messageText,
     });
 
-    socket?.on("getMessage", (data) => {
-      const { senderId, text } = data;
-      setReceivedMessage({
-        senderId,
-        text,
-        createdAt: Date.now(),
-      });
+    let { data } = await axios.post(messageRoute, {
+      users: [from, to],
+      sender: userId,
+      text: messageText,
     });
-
-    receivedMessage &&
-      currentChat?.members.includes(receivedMessage.senderId) &&
-      console.log(receivedMessage);
-
-    let response = await fetch("/api/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        conversationId: currentChat._id,
-        sender: userId,
-        text: messageText,
-      }),
-    });
-    let json = await response.json();
-    if (response.ok) {
+    if (data) {
+      setCurrentMessages([...currentMessages, data]);
       setMessageText("");
-      setCurrentMessages([...currentMessages, json]);
     }
   };
 
-  // useEffect(() => {
-  //   console.log(receivedMessage);
-  //   receivedMessage &&
-  //     currentChat?.members.includes(receivedMessage.senderId) &&
-  //     console.log(receivedMessage);
-  //   // setCurrentMessages([...currentMessages, receivedMessage]);
-  // }, [receivedMessage]);
+  useEffect(() => {
+    socket?.current?.on("getMessage", (data) => {
+      if (data.sender === currentChat && data.to === userId) {
+        setReceivedMessage({
+          sender: data.sender,
+          users: [data.sender, data.to],
+          text: data.text,
+          createdAt: Date.now(),
+        });
+      }
+    });
+  }, [currentMessages, userId, socket, currentChat]);
+
+  useEffect(() => {
+    if (receivedMessage) {
+      setCurrentMessages((prevMessages) => [...prevMessages, receivedMessage]);
+    }
+  }, [receivedMessage]);
+
+  useEffect(() => {
+    const fetchAllUserMessages = async () => {
+      const { data } = await axios.post(`${messageRoute}/allMessages`, {
+        from: userId,
+        to: currentChat,
+      });
+      if (data) {
+        setCurrentMessages(data);
+      }
+    };
+    fetchAllUserMessages();
+  }, [currentChat, userId]);
+
+  useEffect(() => {
+    if (currentChat) {
+      const chatInfo = allUsers?.tempUsers?.find(
+        (user) => user._id === currentChat
+      );
+      setCurrentChatInfo(chatInfo);
+    }
+  }, [currentChat, allUsers]);
 
   if (!currentMessages) return "";
 
   return (
     <div className="messages">
-      <div className="messagesContainer">
-        <div className="messageHistory">
-          {currentChat ? (
-            currentMessages.map((messages, index) => {
+      {currentChat ? (
+        <section className="messageDetails">
+          <div className="currentChatInfo">
+            <img
+              src={`${imageRoute}/${currentChatInfo?.profilePicture}`}
+              alt="friend"
+            />
+            <h3>
+              {currentChatInfo?.firstname} {currentChatInfo?.lastname}
+            </h3>
+          </div>
+          <div className="messageContents ">
+            {currentMessages?.map((messages, index) => {
               const { text, sender, createdAt } = messages;
               return (
-                <div
-                  className="messageContents "
-                  key={index}
-                  ref={scrollMessage}
-                >
+                <div className="messageGap" key={index} ref={scrollMessage}>
                   <div
                     className={`${
                       sender === userId
@@ -90,16 +105,6 @@ const Messages = ({
                         : "messageContent"
                     }`}
                   >
-                    <div className="messageImage">
-                      <img
-                        src={
-                          sender === userId
-                            ? `/images/${profilePicture}`
-                            : `/images/${chatFriend.profilePicture}`
-                        }
-                        alt="user"
-                      />
-                    </div>
                     <p
                       className={`${
                         sender === userId
@@ -121,24 +126,23 @@ const Messages = ({
                   </p>
                 </div>
               );
-            })
-          ) : (
-            <h1 className="startChat">Start Conversation</h1>
-          )}
-        </div>
-
-        <div className="messageSend">
-          <textarea
-            className="writeText"
-            value={messageText}
-            onChange={(e) => setMessageText(e.target.value)}
-            placeholder="Write Message..."
-          ></textarea>
-          <button className="sendMessage" onClick={sendMessage}>
-            Send
-          </button>
-        </div>
-      </div>
+            })}
+          </div>
+          <div className="messageSend">
+            <textarea
+              className="writeText"
+              value={messageText}
+              onChange={(e) => setMessageText(e.target.value)}
+              placeholder="Write Message..."
+            ></textarea>
+            <button className="sendMessage" onClick={sendMessage}>
+              Send
+            </button>
+          </div>
+        </section>
+      ) : (
+        <h1 className="startChat">Start Conversation</h1>
+      )}
     </div>
   );
 };

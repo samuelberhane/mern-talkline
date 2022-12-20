@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import "../auth.css";
 import { useNavigate } from "react-router-dom";
 import { useGlobalUserContext } from "../../context/UserContext";
+import axios from "axios";
+import { authRoute } from "../../utils/apiRoute";
 
 const Register = () => {
   const { dispatch } = useGlobalUserContext();
@@ -20,27 +22,20 @@ const Register = () => {
     setError(null);
     const { firstname, lastname, email, password, confirmPassword } = userData;
     e.preventDefault();
-    let response = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstname,
-        lastname,
-        email,
-        password,
-        confirmPassword,
-      }),
+    let { data } = await axios.post(`${authRoute}/register`, {
+      firstname,
+      lastname,
+      email,
+      password,
+      confirmPassword,
     });
-    let json = await response.json();
-    if (response.ok) {
+    if (data.status === true) {
       setError(null);
       navigate("/login");
       dispatch({ type: "ACCOUNT_CREATED" });
     }
-    if (!response.ok) {
-      setError(json.error);
+    if (data.status === false) {
+      setError(data.error);
     }
   };
 

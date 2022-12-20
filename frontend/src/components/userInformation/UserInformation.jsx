@@ -3,6 +3,8 @@ import "./userInformation.css";
 import { useGlobalPostContext } from "../../context/PostContext";
 import { Link } from "react-router-dom";
 import { useGlobalUserContext } from "../../context/UserContext";
+import axios from "axios";
+import { imageRoute, userRoute } from "../../utils/apiRoute";
 
 const UserInformation = ({ profilePerson }) => {
   const { user, dispatch } = useGlobalUserContext();
@@ -15,24 +17,21 @@ const UserInformation = ({ profilePerson }) => {
   let friendsArray = [...followers, ...following];
   let uniqueFriendsArray = friendsArray.filter(onlyUnique);
   let userFriends = uniqueFriendsArray.map((id) => {
-    return allUsers.find((user) => user._id === id);
+    return allUsers?.tempUsers?.find((user) => user._id === id);
   });
 
   const handleFollow = async () => {
-    let response = await fetch(
+    let { data } = await axios.put(
       followers.includes(user.user._id.toString())
-        ? `/api/users/unfollow/${_id}`
-        : `/api/users/follow/${_id}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user.user),
-      }
+        ? `${userRoute}/unfollow/${_id}`
+        : `${userRoute}/follow/${_id}`,
+
+      user.user
     );
-    let json = await response.json();
-    if (response.ok) {
-      dispatch({ type: "UPDATE_FOLLOW", payload: json });
-      postDispatch({ type: "UPDATE_FOLLOW", payload: json });
+
+    if (data) {
+      dispatch({ type: "UPDATE_FOLLOW", payload: data });
+      postDispatch({ type: "UPDATE_FOLLOW", payload: data });
     }
   };
   return (
@@ -83,7 +82,10 @@ const UserInformation = ({ profilePerson }) => {
               <Link to={`/profile/${_id}`} key={index}>
                 <div className="userfriend">
                   <div className="userfriendImage">
-                    <img src={`/images/${profilePicture}`} alt={firstname} />
+                    <img
+                      src={`${imageRoute}/${profilePicture}`}
+                      alt={firstname}
+                    />
                   </div>
                   {firstname} {lastname}
                 </div>

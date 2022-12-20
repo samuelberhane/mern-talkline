@@ -6,11 +6,13 @@ const bodyParser = require("body-parser");
 const userRouter = require("./routes/userRoute");
 const authRouter = require("./routes/authRoute");
 const postRouter = require("./routes/postRoute");
-const conversationRouter = require("./routes/conversationRoute");
 const messageRouter = require("./routes/messageRoute");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const path = require("path");
+const cors = require("cors");
+
+app.use(cors());
 
 // config env
 dotenv.config();
@@ -46,7 +48,6 @@ app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/messages", messageRouter);
-app.use("/api/conversations", conversationRouter);
 app.post("/api/upload", upload.single("file"), (req, res) => {
   res.status(200).json({ message: "Image Uploaded!" });
 });

@@ -5,7 +5,8 @@ import CreatedPosts from "../createdPosts/CreatedPosts";
 import { useGlobalPostContext } from "../../context/PostContext";
 
 const Feeds = () => {
-  const { userPost: profilePerson } = useGlobalPostContext();
+  const { userPost } = useGlobalPostContext();
+  const profilePerson = userPost.allPosts;
   return (
     <div className="feeds">
       <div className="feedsContainer">
