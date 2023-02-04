@@ -64,17 +64,21 @@ const Share = () => {
                   }
                 />
                 <label htmlFor="file" className="fileUpload">
-                  <i className="fa-solid fa-photo-film"></i> Image
+                  <i className="fa-solid fa-photo-film"></i>{" "}
+                  <p className="shareText">Image</p>
                 </label>
               </li>
               <li>
-                <i className="fa-solid fa-comment"></i> Comments
+                <i className="fa-solid fa-comment"></i>{" "}
+                <p className="shareText">Comments</p>
               </li>
               <li>
-                <i className="fa-sharp fa-solid fa-lightbulb"></i> Thoughts
+                <i className="fa-sharp fa-solid fa-lightbulb"></i>{" "}
+                <p className="shareText">Thoughts</p>
               </li>
               <li onClick={() => dispatch({ type: "OPEN_MODAL" })}>
-                <i className="fa fa-tags" aria-hidden="true"></i> Tags
+                <i className="fa fa-tags" aria-hidden="true"></i>{" "}
+                <p className="shareText">Tags</p>
               </li>
             </ul>
           </div>

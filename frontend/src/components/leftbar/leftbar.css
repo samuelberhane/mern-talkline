@@ -83,7 +83,6 @@
 }
 
 /* large size devices */
-
 @media only screen and (min-width: 1024px) {
   .leftbar {
     display: block;
