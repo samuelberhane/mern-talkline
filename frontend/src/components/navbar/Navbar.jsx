@@ -5,6 +5,7 @@ import { useGlobalUserContext } from "../../context/UserContext";
 import decode from "jwt-decode";
 import { useGlobalPostContext } from "../../context/PostContext";
 import { imageRoute } from "../../utils/apiRoute";
+import { AiOutlineMenuUnfold } from "react-icons/ai";
 
 const Navbar = () => {
   const { dispatch, user, socket } = useGlobalUserContext();
@@ -46,6 +47,7 @@ const Navbar = () => {
             Logout
           </button>
         </div>
+        <AiOutlineMenuUnfold className="menuIcon" />
       </div>
     </nav>
   );
