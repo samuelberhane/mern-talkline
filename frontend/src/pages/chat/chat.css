@@ -1,6 +1,6 @@
 .chatContents {
   display: flex;
-  margin-top: 1rem;
+  flex-direction: column-reverse;
   height: 100%;
 }
 
@@ -11,25 +11,27 @@
 .chatLeft,
 .chatMiddle,
 .chatRight {
-  padding: 1rem 1.8rem;
+  padding: 1rem;
   height: 100%;
   overflow-y: scroll;
 }
 
 .chatLeft {
-  flex: 2.5;
+  width: 100%;
 }
 
 .chatMiddle {
-  flex: 6.5;
+  width: 100%;
+  min-height: 65vh;
 }
 
 .chatRight {
-  flex: 3;
+  display: none;
 }
 
 .chatRight h1 {
   color: rgb(43, 183, 226);
+  font-size: 1.3rem;
 }
 
 .online {
@@ -54,5 +56,34 @@
 
 .chatLeft h1 {
   margin-top: 0.4rem;
+  font-size: 1.3rem;
   color: rgb(43, 183, 226);
+}
+
+@media only screen and (min-width: 768px) {
+  .chatContents {
+    flex-direction: row;
+  }
+  .chatLeft {
+    width: 30%;
+  }
+
+  .chatMiddle {
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .chatLeft {
+    flex: 2.5;
+  }
+
+  .chatMiddle {
+    flex: 6.5;
+  }
+
+  .chatRight {
+    display: block;
+    flex: 2.5;
+  }
 }

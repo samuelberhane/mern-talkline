@@ -10,6 +10,7 @@
 }
 .userfriends h1 {
   color: rgb(43, 183, 226);
+  font-size: 1.3rem;
   margin-bottom: 0.3rem;
 }
 
@@ -27,6 +28,7 @@
 .information h1 {
   color: rgb(43, 183, 226);
   margin-bottom: 0.2rem;
+  font-size: 1.3rem;
 }
 
 .userfriend {
@@ -45,7 +47,7 @@
 }
 
 .information p {
-  font-weight: bold;
+  font-weight: semibold;
   color: #000;
   margin-bottom: 0.3rem;
 }
