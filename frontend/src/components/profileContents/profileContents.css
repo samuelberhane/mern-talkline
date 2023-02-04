@@ -1,21 +1,19 @@
 .profileContents {
-  width: 84%;
-  margin-left: 16%;
+  width: 100%;
 }
 
 .profileRight {
-  flex-basis: 40%;
-  margin-top: 1rem;
+  display: none;
 }
 
 .profileLeft {
-  width: 60%;
+  width: 100%;
 }
 
 .profileDetails {
   display: flex;
-  padding: 0 2rem;
-  gap: 2rem;
+  padding: 0 1rem;
+  gap: 1rem;
   margin-top: 8rem;
 }
 
@@ -32,14 +30,13 @@
 
 .editProfileLink {
   position: absolute;
-  left: 55%;
-  transform: translateX(-50%);
+  top: 40px;
+  right: -14px;
   z-index: 6;
   background-color: blue;
   color: #fff;
   padding: 0.3rem 0.5rem;
   border-radius: 4px;
-  top: -2.5rem;
 }
 
 .profileDescription {
@@ -67,10 +64,41 @@
 .profileImage {
   width: 140px;
   height: 140px;
+  position: relative;
 }
 
 .profileImage img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
+}
+
+@media only screen and (min-width: 650px) {
+  .profileContents {
+    margin-left: 200px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .profileRight {
+    display: block;
+    margin-top: 1rem;
+    width: 35%;
+  }
+
+  .profileLeft {
+    width: 65%;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .profileRight {
+    display: block;
+    margin-top: 1rem;
+    width: 40%;
+  }
+
+  .profileLeft {
+    width: 60%;
+  }
 }

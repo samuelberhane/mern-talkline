@@ -24,17 +24,17 @@ const ProfileContents = () => {
           </div>
 
           <div className="profileDescription">
-            {user.user._id === profilePerson._id && (
-              <Link
-                className="editProfileLink"
-                to={`/editProfile/${user.user._id}`}
-              >
-                Edit
-              </Link>
-            )}
             <div className="profileDesc">
               <div className="profileImage">
                 <img src={`${imageRoute}/${profilePicture}`} alt="user" />
+                {user.user._id === profilePerson._id && (
+                  <Link
+                    className="editProfileLink"
+                    to={`/editProfile/${user.user._id}`}
+                  >
+                    Edit
+                  </Link>
+                )}
               </div>
               <p className="username">
                 {firstname} {lastname}

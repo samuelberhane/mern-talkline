@@ -15,8 +15,6 @@ const Navbar = () => {
   const { token } = user;
   const { firstname, lastname, profilePicture, _id } = user.user;
 
-  console.log("openMenubar", openMenubar);
-
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
     postDispatch({ type: "LOGOUT" });
