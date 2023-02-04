@@ -10,7 +10,7 @@ const Messages = ({ allUsers, currentChat, user, socket }) => {
   const [receivedMessage, setReceivedMessage] = useState(null);
   const [currentChatInfo, setCurrentChatInfo] = useState(null);
   const [currentMessages, setCurrentMessages] = useState(null);
-  const { _id: userId, profilePicture } = user.user;
+  const { _id: userId } = user.user;
   const scrollMessage = useRef();
 
   useEffect(() => {

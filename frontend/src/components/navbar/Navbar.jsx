@@ -26,7 +26,7 @@ const Navbar = () => {
       let decodedToken = decode(token);
       if (decodedToken.exp * 1000 < new Date().getTime()) handleLogout();
     }
-  }, []);
+  }, [token, handleLogout]);
 
   return (
     <>

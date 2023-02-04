@@ -20,14 +20,14 @@ const App = () => {
   const userId = user?.user?._id;
   const socket = useRef();
 
-  // useEffect(() => {
-  //   socket.current = io(socketRoute);
-  //   userDispatch({ type: "SOCKET", payload: socket });
-  //   socket.current?.emit("addUser", userId);
-  //   socket.current?.on("getOnlineUsers", (usersArray) => {
-  //     userDispatch({ type: "ONLINE_USERS", payload: usersArray });
-  //   });
-  // }, [userId]);
+  useEffect(() => {
+    socket.current = io(socketRoute);
+    userDispatch({ type: "SOCKET", payload: socket });
+    socket.current?.emit("addUser", userId);
+    socket.current?.on("getOnlineUsers", (usersArray) => {
+      userDispatch({ type: "ONLINE_USERS", payload: usersArray });
+    });
+  }, [userId, userDispatch]);
 
   // update local storage when user changes
   useEffect(() => {
