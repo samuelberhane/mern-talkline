@@ -3,16 +3,15 @@
 }
 
 .editProfileForm {
-  margin-left: 18%;
-  width: 48%;
-  padding: 1rem 2rem;
+  width: 100%;
+  padding: 1rem;
   padding-bottom: 2rem;
 }
 
 .editProfileFormContainer {
   box-shadow: 1px 1px 3px;
   padding: 1rem;
-  width: 380px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -39,4 +38,23 @@
 .fileEdit {
   display: none;
   background-color: rgb(189, 186, 23);
+}
+
+@media only screen and (min-width: 650px) {
+  .editProfileForm {
+    margin-left: 180px;
+  }
+
+  .editProfileFormContainer {
+    width: 450px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .editProfileForm {
+    margin-left: 210px;
+  }
+  .editProfileFormContainer {
+    width: 450;
+  }
 }

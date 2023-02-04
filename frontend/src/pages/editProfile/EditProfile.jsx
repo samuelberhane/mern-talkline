@@ -66,7 +66,6 @@ const EditProfile = () => {
     });
 
     if (data) {
-      console.log("updated user data", data);
       dispatch({ type: "UPDATE_USER", payload: data });
       postDispatch({ type: "UPDATE_USERS", payload: data });
       navigate("/");

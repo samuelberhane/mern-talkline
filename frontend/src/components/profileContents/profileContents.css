@@ -75,11 +75,17 @@
 
 @media only screen and (min-width: 650px) {
   .profileContents {
-    margin-left: 200px;
+    margin-left: 190px;
+  }
+  .profileDetails {
+    padding: 0 2rem;
   }
 }
 
 @media only screen and (min-width: 1024px) {
+  .profileContents {
+    margin-left: 210;
+  }
   .profileRight {
     display: block;
     margin-top: 1rem;
