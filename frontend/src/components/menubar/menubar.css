@@ -1,0 +1,91 @@
+.openMenubar {
+  background-color: rgb(234, 243, 250);
+  width: 180px;
+  top: 58px;
+  bottom: 0;
+  left: 0;
+  overflow-y: scroll;
+  position: fixed;
+  transition: 2s;
+}
+
+.closeMenubar {
+  position: fixed;
+  top: 58px;
+  bottom: 0;
+  right: -999px;
+  transition: 2s;
+}
+
+.leftbarContainer {
+  padding: 1rem;
+}
+
+.leftbarLists {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  font-size: 1rem;
+}
+
+.profileLink p {
+  background-color: rgb(201, 18, 125);
+  padding: 0.1rem 0.3rem;
+  border-radius: 5px;
+  display: inline;
+  margin-left: 0.3rem;
+  color: #fff;
+}
+
+.profileLink p:hover {
+  background-color: rgb(3, 99, 99);
+}
+
+.leftbarLists li {
+  display: flex;
+  gap: 5px;
+}
+
+.profileLink i,
+.leftbarLists li i {
+  width: 25px;
+  color: rgb(129, 23, 228);
+}
+
+.leftbarFriends {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+.leftbarFriends h1 {
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+  color: rgb(43, 183, 226);
+}
+
+.friendImage {
+  width: 30px;
+  height: 30px;
+}
+
+.friendImage img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.friendsDetail {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.friendName {
+  color: rgb(3, 82, 105);
+  font-size: 15px;
+}
+
+.menuLogout {
+  margin-top: 20px;
+  width: 100%;
+}

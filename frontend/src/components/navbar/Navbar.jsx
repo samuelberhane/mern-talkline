@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./navbar.css";
 import { Link } from "react-router-dom";
 import { useGlobalUserContext } from "../../context/UserContext";
@@ -6,12 +6,16 @@ import decode from "jwt-decode";
 import { useGlobalPostContext } from "../../context/PostContext";
 import { imageRoute } from "../../utils/apiRoute";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
+import Menubar from "../menubar/Menubar";
 
 const Navbar = () => {
   const { dispatch, user, socket } = useGlobalUserContext();
   const { dispatch: postDispatch } = useGlobalPostContext();
+  const [openMenubar, setOpenMenubar] = useState(false);
   const { token } = user;
   const { firstname, lastname, profilePicture, _id } = user.user;
+
+  console.log("openMenubar", openMenubar);
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
@@ -27,29 +31,37 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="navbar">
-      <div className="navbarContainer">
-        <div className="navLeft">
-          <Link to="/">
-            <h1 className="navLogo">TalkLine</h1>
-          </Link>
-        </div>
-        <div className="navRight">
-          <p className="userFullname">
-            {firstname} {lastname}
-          </p>
-          <div className="userImage">
-            <Link to={`/profile/${_id}`}>
-              <img src={`${imageRoute}/${profilePicture}`} alt="user" />
+    <>
+      <nav className="navbar">
+        <div className="navbarContainer">
+          <div className="navLeft">
+            <Link to="/">
+              <h1 className="navLogo">TalkLine</h1>
             </Link>
           </div>
-          <button className="logout" onClick={handleLogout}>
-            Logout
-          </button>
+          <div className="navRight">
+            <p className="userFullname">
+              {firstname} {lastname}
+            </p>
+            <div className="userImage">
+              <Link to={`/profile/${_id}`}>
+                <img src={`${imageRoute}/${profilePicture}`} alt="user" />
+              </Link>
+            </div>
+            <button className="logout" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
+          <AiOutlineMenuUnfold
+            className="menuIcon"
+            onClick={() => setOpenMenubar((prev) => !prev)}
+          />
         </div>
-        <AiOutlineMenuUnfold className="menuIcon" />
-      </div>
-    </nav>
+      </nav>
+      {openMenubar && (
+        <Menubar openMenubar={openMenubar} handleLogout={handleLogout} />
+      )}
+    </>
   );
 };
 
