@@ -33,16 +33,6 @@ const Navbar = () => {
             <h1 className="navLogo">TalkLine</h1>
           </Link>
         </div>
-        {/* <div className="navCenter">
-          <input
-            type="text"
-            className="searchInput"
-            placeholder="Search for person or post..."
-          />
-          <button className="searchIcon">
-            <i className="fa-brands fa-searchengin"></i>
-          </button>
-        </div> */}
         <div className="navRight">
           <p className="userFullname">
             {firstname} {lastname}
@@ -52,20 +42,6 @@ const Navbar = () => {
               <img src={`${imageRoute}/${profilePicture}`} alt="user" />
             </Link>
           </div>
-          {/* <div className="links">
-            <div className="user link">
-              <i className="fa-sharp fa-solid fa-user"></i>
-              <sup className="navSup">1</sup>
-            </div>
-            <div className="chat link">
-              <i className="fa-solid fa-message"></i>
-              <sup className="navSup">3</sup>
-            </div>
-            <div className="notification link">
-              <i className="fa-sharp fa-solid fa-bell"></i>
-              <sup className="navSup">5</sup>
-            </div>
-          </div> */}
           <button className="logout" onClick={handleLogout}>
             Logout
           </button>
