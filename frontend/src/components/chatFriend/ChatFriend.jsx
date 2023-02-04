@@ -3,14 +3,16 @@ import "./chatFriend.css";
 import { imageRoute } from "../../utils/apiRoute";
 
 const ChatFriend = ({ friend }) => {
-  const { profilePicture, firstname, lastname } = friend;
   return (
     <div className="friendInformation">
       <div className="friendImage">
-        <img src={`${imageRoute}/${profilePicture}`} alt={firstname} />
+        <img
+          src={`${imageRoute}/${friend?.profilePicture}`}
+          alt={friend?.firstname}
+        />
       </div>
       <p>
-        {firstname} {lastname}
+        {friend?.firstname} {friend?.lastname}
       </p>
     </div>
   );

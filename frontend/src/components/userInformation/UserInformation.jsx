@@ -76,18 +76,17 @@ const UserInformation = ({ profilePerson }) => {
       <div className="userfriends">
         <h1>User Friends</h1>
         <div className="friends">
-          {userFriends.map((friend, index) => {
-            const { firstname, lastname, profilePicture, _id } = friend;
+          {userFriends?.map((friend, index) => {
             return (
-              <Link to={`/profile/${_id}`} key={index}>
+              <Link to={`/profile/${friend?._id}`} key={index}>
                 <div className="userfriend">
                   <div className="userfriendImage">
                     <img
-                      src={`${imageRoute}/${profilePicture}`}
-                      alt={firstname}
+                      src={`${imageRoute}/${friend?.profilePicture}`}
+                      alt={friend?.firstname}
                     />
                   </div>
-                  {firstname} {lastname}
+                  {friend?.firstname} {friend?.lastname}
                 </div>
               </Link>
             );
