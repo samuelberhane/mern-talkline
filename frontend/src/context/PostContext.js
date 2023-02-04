@@ -47,6 +47,16 @@ const reducer = (state, action) => {
         ...state,
         userPost: { ...state.userPost, allPosts: updateLikedPost },
       };
+    case "DELETE_POST":
+      return {
+        ...state,
+        userPost: {
+          ...state.userPost,
+          allPosts: state.userPost.allPosts.filter(
+            (post) => post._id !== payload
+          ),
+        },
+      };
     case "UPDATE_USERS":
       const updatedUsers = state.allUsers.tempUsers.map((user) => {
         if (user._id === payload._id) return payload;

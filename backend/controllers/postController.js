@@ -72,11 +72,8 @@ const updatePost = async (req, res) => {
 const deletePost = async (req, res) => {
   const { id } = req.params;
   try {
-    const post = await Post.findById(id);
-    if (post.userId === req.body.userId) {
-      const deletedPost = await Post.findByIdAndDelete(id);
-      res.status(200).json(deletedPost);
-    }
+    await Post.findByIdAndDelete(id);
+    res.status(200).json("Post Deleted.");
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

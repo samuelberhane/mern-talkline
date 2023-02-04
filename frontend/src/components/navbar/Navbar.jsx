@@ -52,7 +52,7 @@ const Navbar = () => {
               <img src={`${imageRoute}/${profilePicture}`} alt="user" />
             </Link>
           </div>
-          <div className="links">
+          {/* <div className="links">
             <div className="user link">
               <i className="fa-sharp fa-solid fa-user"></i>
               <sup className="navSup">1</sup>
@@ -65,7 +65,7 @@ const Navbar = () => {
               <i className="fa-sharp fa-solid fa-bell"></i>
               <sup className="navSup">5</sup>
             </div>
-          </div>
+          </div> */}
           <button className="logout" onClick={handleLogout}>
             Logout
           </button>

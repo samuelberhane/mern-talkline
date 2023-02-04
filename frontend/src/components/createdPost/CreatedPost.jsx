@@ -5,6 +5,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useGlobalUserContext } from "../../context/UserContext";
 import axios from "axios";
 import { postRoute, imageRoute } from "../../utils/apiRoute";
+import { MdDeleteOutline } from "react-icons/md";
 
 const CreatedPost = ({ post }) => {
   const { allUsers, dispatch } = useGlobalPostContext();
@@ -35,6 +36,12 @@ const CreatedPost = ({ post }) => {
       }
     };
 
+    // handle post delete
+    const handleDeletePost = async () => {
+      await axios.delete(`${postRoute}/${_id}`);
+      dispatch({ type: "DELETE_POST", payload: _id });
+    };
+
     return (
       <div className="post">
         <div className="postTop">
@@ -48,9 +55,11 @@ const CreatedPost = ({ post }) => {
               <p className="boldSpan">{userTags}</p>
             </div>
           </div>
-          <button className="postEdit">
-            <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
-          </button>
+          {user?.user._id === userId && (
+            <button className="postDelete" onClick={handleDeletePost}>
+              <MdDeleteOutline />
+            </button>
+          )}
         </div>
         <div className="postMiddle">
           <p className="desc">{desc}</p>
