@@ -55,7 +55,7 @@ const Login = () => {
         <div className="authContent">
           <h1>Talkline</h1>
           <p>
-            Staying in touch with your friends and family and know what your
+            Stay in touch with your friends and family and know what your
             friends or family doing using Talkline.
           </p>
         </div>
