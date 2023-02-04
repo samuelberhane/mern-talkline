@@ -12,18 +12,6 @@
     position: fixed;
     background-color: #fff;
   }
-  ::-webkit-scrollbar {
-    width: 4px;
-    padding: 0 0.2rem;
-  }
-
-  ::-webkit-scrollbar-button {
-    background-color: aliceblue;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: rgba(81, 83, 80, 0.3);
-  }
 
   .leftbarContainer {
     padding: 1rem;
@@ -95,5 +83,22 @@
 }
 
 /* large size devices */
-@media only screen and (min-width: 900px) {
+
+@media only screen and (min-width: 1024px) {
+  .leftbar {
+    display: block;
+    width: 210px;
+    height: calc(100vh - 58px);
+    overflow-y: scroll;
+    position: fixed;
+    background-color: #fff;
+  }
+
+  .leftbarContainer {
+    padding: 2rem;
+  }
+
+  .leftbarLists {
+    font-size: 1.1rem;
+  }
 }

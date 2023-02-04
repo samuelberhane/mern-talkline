@@ -21,3 +21,16 @@ button {
 ul {
   list-style: none;
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+  padding: 0 0.2rem;
+}
+
+::-webkit-scrollbar-button {
+  background-color: aliceblue;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(81, 83, 80, 0.3);
+}
