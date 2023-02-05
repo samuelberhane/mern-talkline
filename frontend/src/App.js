@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useGlobalUserContext } from "./context/UserContext";
 import { useGlobalPostContext } from "./context/PostContext";
 import TagsModal from "./components/tagsModal/TagsModal";
-import { socketRoute } from "./utils/apiRoute";
+import { postRoute, socketRoute, userRoute } from "./utils/apiRoute";
 import { io } from "socket.io-client";
 import {
   Login,
@@ -13,10 +13,16 @@ import {
   EditProfile,
   Chat,
 } from "./pages/index";
+import axios from "axios";
 
 const App = () => {
   const { user, dispatch: userDispatch } = useGlobalUserContext();
-  const { userPost, showModal, allUsers } = useGlobalPostContext();
+  const {
+    userPost,
+    showModal,
+    allUsers,
+    dispatch: postDispatch,
+  } = useGlobalPostContext();
   const userId = user?.user?._id;
   const socket = useRef();
 

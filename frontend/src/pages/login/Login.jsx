@@ -3,14 +3,11 @@ import { Link } from "react-router-dom";
 import "../auth.css";
 import { useGlobalUserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import { useGlobalPostContext } from "../../context/PostContext";
 import axios from "axios";
-import { authRoute, postRoute, userRoute } from "../../utils/apiRoute";
+import { authRoute } from "../../utils/apiRoute";
 
 const Login = () => {
   const { accountCreated, dispatch } = useGlobalUserContext();
-  const { dispatch: postDispatch } = useGlobalPostContext();
-
   const [userData, setUserData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
