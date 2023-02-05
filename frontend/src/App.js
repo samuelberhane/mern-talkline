@@ -29,6 +29,24 @@ const App = () => {
     });
   }, [userId, userDispatch]);
 
+  // fetch users and posts if user is logged in
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user) {
+        let { data: postResponse } = await axios.get(postRoute);
+        if (postResponse.status === true) {
+          postDispatch({ type: "GET_POSTS", payload: postResponse });
+        }
+
+        let { data: userResponse } = await axios.get(userRoute);
+        if (userResponse.status === true) {
+          postDispatch({ type: "GET_USERS", payload: userResponse });
+        }
+      }
+    };
+    fetchData();
+  }, [user]);
+
   // update local storage when user changes
   useEffect(() => {
     localStorage.setItem("talklineUser", JSON.stringify(user));

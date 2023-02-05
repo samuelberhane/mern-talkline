@@ -28,18 +28,6 @@ const Login = () => {
     if (data.status === false) {
       setError(data.error);
     }
-
-    let { data: postResponse } = await axios.get(postRoute);
-    if (postResponse.status === true) {
-      postDispatch({ type: "GET_POSTS", payload: postResponse });
-      localStorage.setItem("talklinePosts", JSON.stringify(postResponse));
-    }
-
-    let { data: userResponse } = await axios.get(userRoute);
-    if (userResponse.status === true) {
-      postDispatch({ type: "GET_USERS", payload: userResponse });
-      localStorage.setItem("talklineUsers", JSON.stringify(userResponse));
-    }
   };
 
   useEffect(() => {
