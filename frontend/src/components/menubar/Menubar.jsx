@@ -5,11 +5,11 @@ import { useGlobalUserContext } from "../../context/UserContext";
 import { useGlobalPostContext } from "../../context/PostContext";
 import { imageRoute } from "../../utils/apiRoute";
 
-const Menubar = ({ openMenubar, handleLogout }) => {
+const Menubar = ({ handleLogout }) => {
   const { user } = useGlobalUserContext();
   const { allUsers } = useGlobalPostContext();
   return (
-    <div className={`${openMenubar ? "openMenubar" : "closeMenubar"}`}>
+    <div>
       <div className="leftbarContainer">
         <ul className="leftbarLists">
           <li>

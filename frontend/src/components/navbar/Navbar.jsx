@@ -26,7 +26,7 @@ const Navbar = () => {
       let decodedToken = decode(token);
       if (decodedToken.exp * 1000 < new Date().getTime()) handleLogout();
     }
-  }, [token, handleLogout]);
+  }, [token]);
 
   return (
     <>
@@ -56,9 +56,13 @@ const Navbar = () => {
           />
         </div>
       </nav>
-      {openMenubar && (
+      <div
+        className={`menubarController ${
+          openMenubar ? "openMenubar" : "closeMenubar"
+        }`}
+      >
         <Menubar openMenubar={openMenubar} handleLogout={handleLogout} />
-      )}
+      </div>
     </>
   );
 };

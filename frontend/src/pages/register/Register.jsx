@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../auth.css";
 import { useNavigate } from "react-router-dom";
@@ -38,6 +38,12 @@ const Register = () => {
       setError(data.error);
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setError(null);
+    }, 2000);
+  }, [error]);
 
   return (
     <div className="auth">

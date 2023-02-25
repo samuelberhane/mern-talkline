@@ -51,7 +51,7 @@ const App = () => {
       }
     };
     fetchData();
-  }, [user]);
+  }, [user, postDispatch]);
 
   // update local storage when user changes
   useEffect(() => {

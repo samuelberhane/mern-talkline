@@ -29,6 +29,12 @@ const Login = () => {
 
   useEffect(() => {
     setTimeout(() => {
+      setError(null);
+    }, 2000);
+  }, [error]);
+
+  useEffect(() => {
+    setTimeout(() => {
       dispatch({ type: "REMOVE_ALERT" });
     }, 5000);
   }, [dispatch]);

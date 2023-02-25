@@ -42,10 +42,34 @@
   font-size: 1rem;
 }
 
+.menubarController {
+  position: fixed;
+  top: 58px;
+  bottom: 0;
+  background-color: rgb(234, 243, 250);
+  width: 180px;
+  overflow-y: scroll;
+  z-index: 40;
+}
+
+.openMenubar {
+  transition: all 1s ease-in-out;
+  left: 0;
+}
+
+.closeMenubar {
+  left: -999px;
+  transition: all 2s ease-out;
+}
+
 /* Medium size devices */
 @media only screen and (min-width: 650px) {
   .navbarContainer {
     padding: 0.5rem 1rem;
+  }
+
+  .menubarController {
+    display: none;
   }
 
   .navRight {
